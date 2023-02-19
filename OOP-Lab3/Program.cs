@@ -1,10 +1,17 @@
 ﻿namespace OOP_Lab3
 {
-	internal class Program
+	public class Program
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello, World!");
+			Vector vec = new(15, 6);
+			Console.WriteLine(vec);
+
+			vec.Normalize();
+			Console.WriteLine(vec);
+			Console.WriteLine(vec.Length);
+
+			Console.ReadLine();
 		}
 	}
 }
