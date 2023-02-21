@@ -3,42 +3,65 @@
 	public class Vector : IEquatable<Vector>, IComparable<Vector>
 	{
 		// vector coordinates
-		private double _x;
-		private double _y;
+		private readonly double[] _coordinates;
+
+		// vector dimention
+		private readonly int _dimention;
 
 		// constructors
-		public Vector() : this(0.0, 0.0) { }
-		public Vector(double x, double y) => (_x, _y) = (x, y);
+		public Vector(int dimention) : this(dimention, 0.0) { }
+		public Vector(int dimention, double val) : this(dimention, Enumerable.Repeat(val, dimention).ToArray()) { }
+		public Vector(int dimention, params double[] coordinates)
+		{
+			if (coordinates.Length != dimention)
+			{
+				throw new ArgumentException("Coordinates number isn't equal to specified dimention",
+					nameof(coordinates));
+			}
+
+			_coordinates = new double[dimention];
+			coordinates.CopyTo(_coordinates, 0);
+
+			_dimention = dimention;
+		}
 
 		// coordinates get/set properties
-		public double X
+		public double this[int i]
 		{
-			get => _x;
-			set => _x = value;
+			get => _coordinates[i];
+			set => _coordinates[i] = value;
 		}
-		public double Y
-		{
-			get => _y;
-			set => _y = value;
-		}
+
+		// dimention getter
+		public int Dimention => _dimention;
 
 		// length getter
-		public double Length => Math.Sqrt(_x * _x + _y * _y);
-
-		// static zero vector getter
-		public static Vector Zero => new();
+		public double Length => GetLength();
 
 		// method for vector normalization
-		public void Normalize() => (_x, _y) = (_x / Length, _y / Length);
+		private double GetLength() => Math.Sqrt(_coordinates.Sum(c => c * c));
+		public void Normalize()
+		{
+			double length = GetLength();
+			for (int i = 0; i < _dimention; i++)
+			{
+				_coordinates[i] /= length;
+			}
+		}
 
 		// overriden Object virtual methods
 		public override bool Equals(object? obj) => obj is Vector other && Equals(other);
-		public override int GetHashCode() => HashCode.Combine(_x, _y);
-		public override string ToString() => $"({_x}; {_y})";
+		public override int GetHashCode()
+		{
+			HashCode hash = new();
+			Array.ForEach(_coordinates, c => hash.Add(c));
+			return hash.ToHashCode();
+		}
+		public override string ToString() => $"({string.Join("; ", _coordinates)})";
 
 		// compare methods
-		public bool Equals(Vector? other) => _x == other?._x && _y == other._y;
 		public int CompareTo(Vector? other) => Length.CompareTo(other?.Length);
+		public bool Equals(Vector? other) => other is not null && _coordinates.SequenceEqual(other._coordinates);
 
 		// static comparison operators
 		public static bool operator ==(Vector left, Vector right) => left.Equals(right);
