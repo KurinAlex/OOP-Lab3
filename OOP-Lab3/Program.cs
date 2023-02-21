@@ -42,7 +42,7 @@
 
 			// getting input for new value of x coordinate and setting it
 			Console.WriteLine("Enter new vector coordinates:");
-			for (int i = 0; i < vec.Dimention; i++)
+			for (int i = 0; i < vec.Dimension; i++)
 			{
 				vec[i] = InputHelper.InputDouble($"new {i + 1} coordinate");
 			}
@@ -60,7 +60,7 @@
 			Console.WriteLine();
 
 			// printing vector length and square root of squared vector coordinates sum for comparison
-			double trueLength = Math.Sqrt(Enumerable.Range(0, vec.Dimention).Select(i => vec[i] * vec[i]).Sum());
+			double trueLength = Math.Sqrt(Enumerable.Range(0, vec.Dimension).Select(i => vec[i] * vec[i]).Sum());
 			Console.WriteLine($"Vector length: {vec.Length}");
 			Console.WriteLine($"True length:   {trueLength}");
 		}

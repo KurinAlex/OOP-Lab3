@@ -5,7 +5,7 @@
 		// vector coordinates
 		private readonly double[] _coordinates;
 		// vector dimention
-		private readonly int _dimention;
+		private readonly int _dimension;
 
 		// creates vector of specified dimention, filled with zeros
 		public Vector(int dimention) : this(dimention, 0.0) { }
@@ -28,7 +28,7 @@
 			_coordinates = new double[dimention];
 			coordinates.CopyTo(_coordinates, 0);
 
-			_dimention = dimention;
+			_dimension = dimention;
 		}
 
 		// coordinates get/set indexer
@@ -39,7 +39,7 @@
 		}
 
 		// dimention getter
-		public int Dimention => _dimention;
+		public int Dimension => _dimension;
 		// length getter
 		public double Length => GetLength();
 
@@ -49,7 +49,7 @@
 		public void Normalize()
 		{
 			double length = GetLength();
-			for (int i = 0; i < _dimention; i++)
+			for (int i = 0; i < _dimension; i++)
 			{
 				_coordinates[i] /= length;
 			}
