@@ -2,6 +2,33 @@
 {
 	public class Program
 	{
+		static void TestConstructors()
+		{
+			// getting input for dimention
+			int dimention = InputHelper.InputInt32("vectors dimention", dim => dim > 0);
+			Console.WriteLine();
+
+			// creating vector filled with zeros
+			Console.WriteLine("Vector filled with zeros:");
+			var zeroVec = new Vector(dimention);
+			Console.WriteLine(zeroVec);
+			Console.WriteLine();
+
+			// creating vector filled with specified value
+			Console.WriteLine("Vector filled with specified value:");
+			double value = InputHelper.InputDouble("value to fill array");
+			var oneValueVec = new Vector(dimention, value);
+			Console.WriteLine("Result:");
+			Console.WriteLine(oneValueVec);
+			Console.WriteLine();
+
+			// creating vector filled with an array of values
+			Console.WriteLine("Vector filled with an array of values:");
+			var vec = InputHelper.InputVector(dimention);
+			Console.WriteLine("Result:");
+			Console.WriteLine(vec);
+		}
+
 		static void TestCoordinates()
 		{
 			// getting input for vector
@@ -10,23 +37,20 @@
 
 			// printing vector coordinates before changes
 			Console.WriteLine("Vector coordinates before changes:");
-			Console.WriteLine($"- X: {vec.X}");
-			Console.WriteLine($"- Y: {vec.Y}");
+			Console.WriteLine(vec);
 			Console.WriteLine();
 
 			// getting input for new value of x coordinate and setting it
-			double x = InputHelper.InputDouble("new x");
-			vec.X = x;
-
-			// getting input for new value of y coordinate and setting it
-			double y = InputHelper.InputDouble("new y");
-			vec.Y = y;
+			Console.WriteLine("Enter new vector coordinates:");
+			for (int i = 0; i < vec.Dimention; i++)
+			{
+				vec[i] = InputHelper.InputDouble($"new {i + 1} coordinate");
+			}
+			Console.WriteLine();
 
 			// printing vector coordinates after changes
-			Console.WriteLine();
 			Console.WriteLine("Vector coordinates after changes:");
-			Console.WriteLine($"- X: {vec.X}");
-			Console.WriteLine($"- Y: {vec.Y}");
+			Console.WriteLine(vec);
 		}
 
 		static void TestLength()
@@ -36,8 +60,9 @@
 			Console.WriteLine();
 
 			// printing vector length and square root of squared vector coordinates sum for comparison
-			Console.WriteLine($"Vector length:   {vec.Length}");
-			Console.WriteLine($"Sqrt(x^2 + y^2): {Math.Sqrt(vec.X * vec.X + vec.Y * vec.Y)}");
+			double trueLength = Math.Sqrt(Enumerable.Range(0, vec.Dimention).Select(i => vec[i] * vec[i]).Sum());
+			Console.WriteLine($"Vector length: {vec.Length}");
+			Console.WriteLine($"True length:   {trueLength}");
 		}
 
 		static void TestNormalization()
@@ -49,7 +74,7 @@
 			// printing vector coordinates before normalization
 			Console.WriteLine("Before normalization:");
 			Console.WriteLine($"- coordinates: {vec}");
-			Console.WriteLine($"- length:      {vec.Length}");
+			Console.WriteLine($"- length: {vec.Length}");
 			Console.WriteLine();
 
 			// normalizing a vector
@@ -58,7 +83,7 @@
 			// printing vector coordinates after normalization
 			Console.WriteLine("After normalization:");
 			Console.WriteLine($"- coordinates: {vec}");
-			Console.WriteLine($"- length:      {vec.Length}");
+			Console.WriteLine($"- length: {vec.Length}");
 		}
 
 		static void TestComparison()
@@ -90,14 +115,18 @@
 
 		static void Main(string[] args)
 		{
-			//initializing actions map
+			// initializing bool variable for detecting if exit from program is needed
+			bool needExit = false;
+
+			// initializing actions map
 			Dictionary<char, (string Description, Action Action)> actions = new()
 			{
-				['1'] = ("test coordinates access functionality", TestCoordinates),
-				['2'] = ("test computing length functionality", TestLength),
-				['3'] = ("test normalization functionality", TestNormalization),
-				['4'] = ("test comparison functionality", TestComparison),
-				['e'] = ("exit", () => Environment.Exit(0))
+				['1'] = ("test constructors functionality", TestConstructors),
+				['2'] = ("test coordinates access functionality", TestCoordinates),
+				['3'] = ("test computing length functionality", TestLength),
+				['4'] = ("test normalization functionality", TestNormalization),
+				['5'] = ("test comparison functionality", TestComparison),
+				['e'] = ("exit", () => needExit = true)
 			};
 
 			// infinite asking for input
@@ -119,6 +148,12 @@
 				actions[c].Action();
 				Console.WriteLine();
 				Console.WriteLine();
+
+				// exitting from main loop if exit is needed
+				if (needExit)
+				{
+					break;
+				}
 
 				// waiting for pressing any key and clear console
 				Console.Write("Press any key to continue...");

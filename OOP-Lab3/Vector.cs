@@ -4,15 +4,21 @@
 	{
 		// vector coordinates
 		private readonly double[] _coordinates;
-
 		// vector dimention
 		private readonly int _dimention;
 
-		// constructors
+		// creates vector of specified dimention, filled with zeros
 		public Vector(int dimention) : this(dimention, 0.0) { }
+		// creates vector of specified dimention, filled with specified value
 		public Vector(int dimention, double val) : this(dimention, Enumerable.Repeat(val, dimention).ToArray()) { }
+		// creates vector of specified dimention, filled with specified array of values
 		public Vector(int dimention, params double[] coordinates)
 		{
+			if (dimention <= 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(dimention), "Dimention must be a positive integer");
+			}
+
 			if (coordinates.Length != dimention)
 			{
 				throw new ArgumentException("Coordinates number isn't equal to specified dimention",
@@ -25,7 +31,7 @@
 			_dimention = dimention;
 		}
 
-		// coordinates get/set properties
+		// coordinates get/set indexer
 		public double this[int i]
 		{
 			get => _coordinates[i];
@@ -34,12 +40,12 @@
 
 		// dimention getter
 		public int Dimention => _dimention;
-
 		// length getter
 		public double Length => GetLength();
 
-		// method for vector normalization
+		// computes vector length
 		private double GetLength() => Math.Sqrt(_coordinates.Sum(c => c * c));
+		// normalizes vector
 		public void Normalize()
 		{
 			double length = GetLength();

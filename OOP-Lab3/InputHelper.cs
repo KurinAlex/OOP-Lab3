@@ -18,19 +18,30 @@
 			return res;
 		}
 
-		// gets input for variable of type double
-		public static double InputDouble(string name)
-		{
-			return Input<double>(name, double.TryParse);
-		}
+		// gets input for variable of type 32-bit int
+		public static int InputInt32(string name, params Predicate<int>[] conditions)
+			=> Input(name, int.TryParse, conditions);
 
-		// gets input for vector coordinates
-		public static Vector InputVector(string name = "vector")
+		// gets input for variable of type double
+		public static double InputDouble(string name) => Input<double>(name, double.TryParse);
+
+		// gets input for coordinates of vector with specified dimention
+		public static Vector InputVector(int dimention, string name = "vector")
 		{
 			Console.WriteLine($"Enter {name} coordinates:");
-			double x = InputDouble("x");
-			double y = InputDouble("y");
-			return new(x, y);
+			var coordinates = new double[dimention];
+			for (int i = 0; i < dimention; i++)
+			{
+				coordinates[i] = InputDouble($"{i + 1} coordinate");
+			}
+			return new(dimention, coordinates);
+		}
+
+		// gets input for dimention and coordinates of vector
+		public static Vector InputVector(string name = "vector")
+		{
+			int dimention = InputInt32("vector dimention", dim => dim > 0);
+			return InputVector(dimention, name);
 		}
 	}
 }
