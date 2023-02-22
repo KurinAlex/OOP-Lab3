@@ -4,27 +4,27 @@
 	{
 		static void TestConstructors()
 		{
-			// getting input for dimention
-			int dimention = InputHelper.InputInt32("vectors dimention", dim => dim > 0);
+			// getting input for dimension
+			int dimension = InputHelper.InputInt32("vectors dimension", dim => dim > 0);
 			Console.WriteLine();
 
 			// creating vector filled with zeros
 			Console.WriteLine("Vector filled with zeros:");
-			var zeroVec = new Vector(dimention);
+			var zeroVec = new Vector(dimension);
 			Console.WriteLine(zeroVec);
 			Console.WriteLine();
 
 			// creating vector filled with specified value
 			Console.WriteLine("Vector filled with specified value:");
 			double value = InputHelper.InputDouble("value to fill array");
-			var oneValueVec = new Vector(dimention, value);
+			var oneValueVec = new Vector(dimension, value);
 			Console.WriteLine("Result:");
 			Console.WriteLine(oneValueVec);
 			Console.WriteLine();
 
 			// creating vector filled with an array of values
 			Console.WriteLine("Vector filled with an array of values:");
-			var vec = InputHelper.InputVector(dimention);
+			var vec = InputHelper.InputVector(dimension);
 			Console.WriteLine("Result:");
 			Console.WriteLine(vec);
 		}

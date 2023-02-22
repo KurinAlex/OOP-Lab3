@@ -4,31 +4,31 @@
 	{
 		// vector coordinates
 		private readonly double[] _coordinates;
-		// vector dimention
+		// vector dimension
 		private readonly int _dimension;
 
-		// creates vector of specified dimention, filled with zeros
-		public Vector(int dimention) : this(dimention, 0.0) { }
-		// creates vector of specified dimention, filled with specified value
-		public Vector(int dimention, double val) : this(dimention, Enumerable.Repeat(val, dimention).ToArray()) { }
-		// creates vector of specified dimention, filled with specified array of values
-		public Vector(int dimention, params double[] coordinates)
+		// creates vector of specified dimension, filled with zeros
+		public Vector(int dimension) : this(dimension, 0.0) { }
+		// creates vector of specified dimension, filled with specified value
+		public Vector(int dimension, double val) : this(dimension, Enumerable.Repeat(val, dimension).ToArray()) { }
+		// creates vector of specified dimension, filled with specified array of values
+		public Vector(int dimension, params double[] coordinates)
 		{
-			if (dimention <= 0)
+			if (dimension <= 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(dimention), "Dimention must be a positive integer");
+				throw new ArgumentOutOfRangeException(nameof(dimension), "dimension must be a positive integer");
 			}
 
-			if (coordinates.Length != dimention)
+			if (coordinates.Length != dimension)
 			{
-				throw new ArgumentException("Coordinates number isn't equal to specified dimention",
+				throw new ArgumentException("Coordinates number isn't equal to specified dimension",
 					nameof(coordinates));
 			}
 
-			_coordinates = new double[dimention];
+			_coordinates = new double[dimension];
 			coordinates.CopyTo(_coordinates, 0);
 
-			_dimension = dimention;
+			_dimension = dimension;
 		}
 
 		// coordinates get/set indexer
@@ -38,7 +38,7 @@
 			set => _coordinates[i] = value;
 		}
 
-		// dimention getter
+		// dimension getter
 		public int Dimension => _dimension;
 		// length getter
 		public double Length => GetLength();

@@ -25,23 +25,23 @@
 		// gets input for variable of type double
 		public static double InputDouble(string name) => Input<double>(name, double.TryParse);
 
-		// gets input for coordinates of vector with specified dimention
-		public static Vector InputVector(int dimention, string name = "vector")
+		// gets input for coordinates of vector with specified dimension
+		public static Vector InputVector(int dimension, string name = "vector")
 		{
 			Console.WriteLine($"Enter {name} coordinates:");
-			var coordinates = new double[dimention];
-			for (int i = 0; i < dimention; i++)
+			var coordinates = new double[dimension];
+			for (int i = 0; i < dimension; i++)
 			{
 				coordinates[i] = InputDouble($"{i + 1} coordinate");
 			}
-			return new(dimention, coordinates);
+			return new(dimension, coordinates);
 		}
 
-		// gets input for dimention and coordinates of vector
+		// gets input for dimension and coordinates of vector
 		public static Vector InputVector(string name = "vector")
 		{
-			int dimention = InputInt32("vector dimention", dim => dim > 0);
-			return InputVector(dimention, name);
+			int dimension = InputInt32("vector dimension", dim => dim > 0);
+			return InputVector(dimension, name);
 		}
 	}
 }
