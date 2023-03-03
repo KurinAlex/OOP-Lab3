@@ -7,29 +7,33 @@
 		// vector dimension
 		private readonly int _dimension;
 
+		// creates 0-dimention vector
+		public Vector() : this(0) { }
 		// creates vector of specified dimension, filled with zeros
 		public Vector(int dimension) : this(dimension, 0.0) { }
 		// creates vector of specified dimension, filled with specified value
-		public Vector(int dimension, double val) : this(dimension, Enumerable.Repeat(val, dimension).ToArray()) { }
+		public Vector(int dimension, double val) : this(dimension, Enumerable.Repeat(val, dimension)) { }
 		// creates vector of specified dimension, filled with specified array of values
-		public Vector(int dimension, params double[] coordinates)
+		public Vector(int dimension, IEnumerable<double> coordinates)
 		{
-			if (dimension <= 0)
+			if (dimension < 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(dimension), "dimension must be a positive integer");
+				throw new ArgumentOutOfRangeException(nameof(dimension), "Dimension must be a non-negative integer");
 			}
 
-			if (coordinates.Length != dimension)
+			var coordinatesArray = coordinates.ToArray();
+			if (coordinatesArray.Length != dimension)
 			{
 				throw new ArgumentException("Coordinates number isn't equal to specified dimension",
 					nameof(coordinates));
 			}
 
-			_coordinates = new double[dimension];
-			coordinates.CopyTo(_coordinates, 0);
-
+			_coordinates = coordinatesArray;
 			_dimension = dimension;
 		}
+
+		// empty 0-dimentional vector static getter
+		public static Vector Empty => new();
 
 		// coordinates get/set indexer
 		public double this[int i]

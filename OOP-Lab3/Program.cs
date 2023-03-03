@@ -4,6 +4,12 @@
 	{
 		static void TestConstructors()
 		{
+			// creating empty vector
+			Console.WriteLine("Empty vector:");
+			var emptyVec = Vector.Empty;
+			Console.WriteLine(emptyVec);
+			Console.WriteLine();
+
 			// getting input for dimension
 			int dimension = InputHelper.InputInt32("vectors dimension", dim => dim > 0);
 			Console.WriteLine();
